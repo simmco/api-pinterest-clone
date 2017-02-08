@@ -55,6 +55,22 @@ router.post('/picture/:id', requireAuth, function(req, res) {
     })
 });
 
+router.post('/picture/:id/delete', requireAuth, function(req, res) {
+    var picId = req.params.id;
+    var userAuth = req.user._id.toString();
+    var userPic = req.body.userId;
+    console.log(typeof userAuth);
+    console.log(typeof userPic);
+    if(userAuth === userPic) {
+      Picture.findById(picId)
+        .remove()
+        .then(response =>{
+          res.send({picId})
+        })
+    }
+
+});
+
 //my picture
 // router.get("/picture/mypicture", requireAuth, function(req, res) {
 //   var user = req.user._id;
