@@ -1,0 +1,4 @@
+{
+    "DBHost": "mongodb://localhost:27017/pinterest",
+    "secret": "l2kasdjfqijflka3424n)§$(%)"
+}

@@ -8,9 +8,9 @@ const router = new express.Router();
 const requireAuth = passport.authenticate("jwt", { session: false });
 
 router.get("/", pictureController.get);
-router.get("/picture/:user", pictureController.getUser);
-router.post("/picture", requireAuth, pictureController.post);
+router.get("/user/:user", pictureController.getUser);
+router.post("/picture", requireAuth,  pictureController.post);
 router.patch("/picture/:id", requireAuth, pictureController.likePost);
-router.delete("/picture/:id/delete", requireAuth, pictureController.deletePost);
+router.delete("/picture/:id", requireAuth, pictureController.deletePost);
 
 module.exports = router;

@@ -2,7 +2,7 @@ var Picture = require("../models/picture");
 
 exports.get = function(req, res) {
   Picture.find({}).populate("poster").then(pics => {
-    res.send({ pics });
+    res.json({ pics });
   });
 };
 
@@ -21,11 +21,10 @@ exports.post = function(req, res) {
   var newPicture = new Picture({
     title: title,
     url: url,
-    likes: 0,
     poster: userId
   });
 
-  newPicture.save().then(pic => res.send(pic));
+  newPicture.save().then(pic => res.send(pic)).catch(err => res.send(err));
 };
 
 exports.likePost = function(req, res) {
@@ -41,9 +40,13 @@ exports.likePost = function(req, res) {
       pic.likedPics.push(user);
       pic.likes = pic.likes + 1;
     }
-    pic.save().then(() => {
-      res.send({ pic, user });
-    });
+
+    return pic
+      .save()
+      .then(val => {
+        res.send({ pic, message: "successfully updated" });
+      })
+      .catch(err => console.log(err));
   });
 };
 
@@ -51,9 +54,9 @@ exports.deletePost = function(req, res) {
   var picId = req.params.id;
   var userAuth = req.user._id.toString();
   var userPic = req.body.userId;
-  if (userAuth === userPic) {
-    Picture.findById(picId).remove().then(response => {
-      res.send({ picId });
+
+    Picture.findById(picId).remove().then(result => {
+      res.send({ result, message: "successfully deleted" });
     });
-  }
+  
 };
