@@ -172,16 +172,20 @@ describe("Picture", () => {
         title: "the wonderful dummy"
       });
       picture.save((err, book) => {
-        chai.request(server).delete("/api//picture/" + book.id).set("authorization", token).end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a("object");
-          res.body.should.have
-            .property("message")
-            .eql("successfully deleted");
-          res.body.result.should.have.property("ok").eql(1);
-          res.body.result.should.have.property("n").eql(1);
-          done();
-        });
+        chai
+          .request(server)
+          .delete("/api//picture/" + book.id)
+          .set("authorization", token)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("object");
+            res.body.should.have
+              .property("message")
+              .eql("successfully deleted");
+            res.body.result.should.have.property("ok").eql(1);
+            res.body.result.should.have.property("n").eql(1);
+            done();
+          });
       });
     });
   });
